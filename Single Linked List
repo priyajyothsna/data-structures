@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+
+struct node *create(struct node *head)
+{
+    struct node *a,*temp;
+    int data;
+    printf("enter data: ");
+    scanf("%d",&data);
+    while(data!=-1)
+    {
+        a=(struct node *)malloc(sizeof(struct node));
+        a->data=data;
+        a->next=NULL;
+        if(head==NULL)
+        {
+            head=temp=a;
+        }
+        else
+        {
+            temp->next=a;
+            temp=temp->next;
+        }
+        printf("enter data: ");
+        scanf("%d",&data);
+    }
+    return head;
+}
+struct node *deletebegin(struct node *head)
+{
+    struct node *temp=head;
+    head=temp->next;
+    free(temp);
+    return head;
+}
+struct node *delend(struct node *head)
+{
+    struct node *temp=head,*v;
+    while(temp->next!=NULL)
+    {
+        v=temp;
+        temp=temp->next;
+    }
+    v->next=NULL;
+    free(temp);
+    return head;
+}
+struct node *delspecific(struct node *head)
+{
+    struct node *temp=head,*s;
+    int position,i;
+    printf("enter position t0 del a data: ");
+    scanf("%d",&position);
+    for(i=0;i<position-1;i++)
+    {
+        s=temp;
+        temp=temp->next;
+    }
+    s->next=temp->next;
+    temp->next=NULL;
+    free(temp);
+    return head;
+}
+struct node *specific(struct node *head)
+{
+    struct node *d,*temp=head;
+    d=(struct node *)malloc(sizeof(struct node));
+    int data,i;
+    printf("enter inserted data: ");
+    scanf("%d",&data);
+    d->data=data;
+    int position;
+    printf("enter position to insert an element: ");
+    scanf("%d",&position);
+    for(i=1;i<position-1;i++)
+    {
+        temp=temp->next;
+    }
+    d->next=temp->next;
+    temp->next=d;
+    return head;
+}
+struct node *end(struct node *head)
+{
+    struct node *c,*temp=head;
+    c=(struct node *)malloc(sizeof(struct node));
+    int data;
+    printf("enter data to insert at end: ");
+    scanf("%d",&data);
+    c->data=data;
+    c->next=NULL;
+    while(temp->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    temp->next=c;
+    return head;
+}
+struct node *begin(struct node *head)
+{
+    struct node *b;
+    b=(struct node *)malloc(sizeof(struct node));
+    int data;
+    printf("enter inserted data: ");
+    scanf("%d",&data);
+    b->data=data;
+    b->next=head;
+    head=b;
+    return head;
+}
+void display(struct node *head)
+{
+    struct node *temp=head;
+    while(temp!=NULL)
+    {
+        printf(" %d",temp->data);
+        temp=temp->next;
+    }
+}
+void main()
+{
+    struct node *head=NULL;
+    int choice;
+    printf("enter your choice: ");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+       
+        case 1:head=create(head);
+               display(head);
+               break;
+        case 2:head=create(head);
+               head=begin(head);
+               display(head);
+               break;
+        case 3:head=create(head);
+               head=end(head);
+               display(head);
+               break;
+        case 4:head=create(head);
+               head=specific(head);
+               display(head);
+               break;
+        case 5:head=create(head);
+               head=deletebegin(head);
+               display(head);
+               break;
+        case 6:head=create(head);
+               head=delend(head);
+               display(head);
+               break;
+        case 7:head=create(head);
+               head=delspecific(head);
+               display(head);
+               break;
+        default:printf("wrong choice");
+    }
+}
