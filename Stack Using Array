@@ -1,0 +1,70 @@
+#include<stdio.h>
+void pop();
+void push();
+void display();
+int a[1000],n,i,choice,top=-1;
+int main()
+{
+    printf("enter stack size: ");
+    scanf("%d",&n);
+    do{
+        printf("enter choice: ");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:pop();
+                   break;
+            case 2:push();
+                   break;
+            case 3:display();
+                   break;
+            case 4:printf("exit");
+                   break;
+            default:printf("you have entered wrong choice");
+        }
+    }
+    while(choice!=4);
+    return 0;
+}
+void push()
+{
+    if(top>=n-1)
+    {
+        printf("stack overflow");
+    }
+    else
+    {
+        int data;
+        printf("enter data to be inserted: ");
+        scanf("%d",&data);
+        top++;
+        a[top]=data;
+    }
+}
+void pop()
+{
+    if(top<=-1)
+    {
+        printf("stack underflow");
+    }
+    else
+    {
+        printf("deleted element is %d",a[top]);
+        top--;
+    }
+}
+void display()
+{
+    if(top>=0)
+    {
+        printf("elements in stack are: ");
+        for(i=0;i<=top;i++)
+        {
+            printf("\t%d",a[i]);
+        }
+    }
+    else
+    {
+        printf("enter the stack is empty");
+    }
+}
