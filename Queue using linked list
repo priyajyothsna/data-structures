@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+};
+struct node *front=NULL,*rear=NULL;
+void enqueue(int x)
+{
+    struct node *a;
+    a=(struct node *)malloc(sizeof(struct node));
+    a->data=x;
+    a->next=NULL;
+    if(rear==NULL)
+    {
+    rear=front=a;
+    }
+    else
+    {
+        rear->next=a;
+        rear=rear->next;
+    }
+}
+void dequeue()
+{
+    if(rear==NULL)
+    {
+        printf("queue is empty\n");
+    }
+    else
+    {
+    struct node *temp=front;
+    printf("del element is: %d\n",temp->data);
+    front=front->next;
+    free(temp);
+    }
+}
+void display(){
+    struct node *temp=front;
+    if(rear==NULL)
+    {
+        printf("queue is empty\n");
+    }
+    else
+    {
+        while(temp!=NULL)
+        {
+        printf(" %d\n",temp->data);
+        temp=temp->next;
+        }
+    }
+}
+void peek()
+{
+    printf("first element is %d",front->data);
+}
+int main(){
+    enqueue(13);
+    enqueue(56);
+    enqueue(34);
+    enqueue(10);
+    enqueue(12);
+    display();
+    dequeue();
+    printf("After deletion elements are: \n");
+    display();
+    peek();
+}
