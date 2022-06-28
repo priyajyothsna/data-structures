@@ -1,0 +1,104 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct Avlnode
+{
+    int value,height;
+    struct Avlnode*left,*right;
+};
+int height(struct Avlnode *t)
+{
+    if (t==NULL)
+    return -1;
+    else
+    return t->height;
+}
+int Max(int a, int b)
+{
+    if (a>b)
+    return a;
+    else
+    return b;
+}
+struct Avlnode * LLRotate(struct Avlnode*t)
+{
+    struct Avlnode*t1;
+    t1=t->left;
+    t->left = t1->right;
+    t1->right = t;
+     t->height = Max(height(t->left), height(t->right)) + 1;
+     t1->height = Max(height(t1->left), t->height) + 1;
+     return t1;
+}
+struct Avlnode * RRRotate(struct Avlnode *t)
+{
+    struct Avlnode *t1;
+    t1 = t->right;
+    t->right = t1->left;
+    t1->left = t;
+    t->height = Max(height(t->left), height(t->right)) + 1;
+    t1->height = Max(t->height, height(t1->right)) + 1;
+     return t1;
+}
+struct Avlnode * LRRotate(struct Avlnode *t)
+{
+   t->left = RRRotate(t->left);
+    t = LLRotate(t);
+    return t;
+}
+struct Avlnode * RLRotate(struct Avlnode *t)
+{
+    t->right = LLRotate(t->right);
+   t = RRRotate(t);
+     return t;
+}
+struct Avlnode * insert(int elt, struct Avlnode *t)
+{
+ if(t == NULL)
+ {
+    t = (struct Avlnode *) malloc(sizeof(struct Avlnode));
+        t->value = elt;
+      t->height = 0;
+       t->left = t->right = NULL;
+ }
+ else
+ if(elt < t->value)
+ {
+   t->left = insert(elt, t->left);
+ if ( height(t->left) - height(t->right) == 2)
+ if(elt < t->left->value)
+   t = LLRotate(t);
+ else
+  t = LRRotate(t);
+ }
+ else
+ if(elt > t->value)
+ {
+   t->right = insert(elt, t->right);
+ if ( height(t->right) - height(t->left) == 2)
+ if(elt > t->right->value)
+   t = RRRotate(t);
+ else
+  t = RLRotate(t);
+ }
+    t->height = Max(height(t->left), height(t->right)) + 1;
+   return t;
+}
+void PreOrder(struct Avlnode*t)
+{
+    if(t!=NULL)
+    {
+        printf("%d ",t->value);
+        PreOrder(t->left);
+        PreOrder(t->right);
+    }
+}
+int main()
+{
+    struct Avlnode*t;
+    t=insert(23,t);
+    t=insert(46,t);
+    t=insert(2,t);
+    t=insert(30,t);
+    t=insert(39,t);
+    PreOrder(t);
+}
