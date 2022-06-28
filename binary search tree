@@ -1,0 +1,138 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node {
+    int data;
+    struct node*left,*right;
+};
+struct node*insert(int ele,struct node*t)
+{
+    if(t==NULL)
+    {
+        t=(struct node*)malloc(sizeof(struct node));
+        t->data=ele;
+        t->left=NULL;
+        t->right=NULL;
+    }
+    else 
+    {
+    if(ele<t->data)
+     t->left=insert(ele,t->left);
+        else if (ele>t->data)
+        t->right=insert(ele,t->right);
+    }
+    return t;
+}
+void preorder(struct node*t)
+{
+    if(t!=NULL)
+    {
+    printf("%d\t",t->data);
+    preorder(t->left);
+    preorder(t->right);
+    }
+}
+void inorder(struct node*t)
+{
+    if(t!=NULL)
+    {
+        inorder(t->left);
+        printf("%d\t",t->data);
+        inorder(t->right);
+    }
+}
+void postorder(struct node*t)
+{
+    if(t!=NULL)
+    {
+        postorder(t->left);
+        postorder(t->right);
+        printf("%d\t",t->data);
+    }
+}
+struct node*find(int ele,struct node*t)
+{
+    if(t!=NULL)
+    {
+        if(t->data==ele)
+        {
+        printf("element found\n");
+        return t;
+        }
+    else if(ele<t->data)
+    return find(ele,t->left);
+    else 
+    return find(ele,t->right);
+    }
+else 
+{
+    printf("element not found");
+    return NULL;
+}
+return t;
+}
+struct node*findmin(struct node*t)
+{
+    if(t==NULL)
+    return NULL;
+    while(t->left!=NULL)
+    t->left=t;
+    return t;
+}
+struct node*findmax(struct node*t)
+{
+    if(t==NULL)
+    return NULL;
+    while(t->right!=NULL)
+    t->right=t;
+    return t;
+}
+ void main()
+{
+    int n,ch;
+    struct node*m,*root=NULL;
+    while(1)
+    {
+        printf("\n1.insert\n2.preorder\n3.inorder\n4.postorder\n5.find element\n6.findmin\n7.findmax\n8.EXIT:\nenter your choice:\n");
+        scanf("%d",&ch);
+        switch(ch)
+        {
+            case 1:printf("enter element to insert: ");
+                   scanf("%d",&n);
+                   root=insert(n,root);
+                   break;
+            case 2:preorder(root);
+                   break;
+            case 3:inorder(root);
+                   break;
+            case 4:postorder(root);
+                   break;
+            case 5:printf("enter elementto find: ");
+                   scanf("%d",&n);
+                   m=find(n,root);
+                   break;
+            case 6:m=findmax(root);
+                   if(m!=NULL)
+                   printf("maximum element found is %d",m->data);
+                   break;
+             case 7: m=findmin(root);
+                     if(m!=NULL)
+                     printf("Minimum element is %d\n",m->data);
+                      break;
+            case 8:exit(0);
+            default:printf("pls enter correct choice");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
